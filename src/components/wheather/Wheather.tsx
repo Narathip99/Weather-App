@@ -24,7 +24,7 @@ const Wheather = () => {
       return;
     }
     try {
-      const url = `https://api.weatherapi.com/v1/current.json?key=32aa4ef5562e4682a9491323241906&q=${city}&aqi=no`;
+      const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`;
       const response = await fetch(url);
       const data = await response.json();
 
@@ -42,8 +42,8 @@ const Wheather = () => {
         icon: data.current.condition.icon,
       });
     } catch (error) {
-      setWeatherData(false);
-      console.log("error:" + error);
+      setWeatherData(null);
+      console.log("error:", error);
     }
   };
 
@@ -71,14 +71,14 @@ const Wheather = () => {
             <div className="col">
               <img src={humidityIcon} alt="" />
               <div>
-                <p>{weatherData.humidity} %</p>
+                <p>{weatherData?.humidity} %</p>
                 <span>Humidity</span>
               </div>
             </div>
             <div className="col">
               <img src={windIcon} alt="" />
               <div>
-                <p>{weatherData.windSpeed} km/h</p>
+                <p>{weatherData?.windSpeed} km/h</p>
                 <span>Wind Speed</span>
               </div>
             </div>
