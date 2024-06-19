@@ -14,17 +14,18 @@ interface WeatherData {
 }
 
 const Wheather = () => {
-  const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
+  const apiKey = process.env.WEATHER_API_KEY;
+
   const inputRef = useRef<HTMLInputElement>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
-  const search = async (city) => {
+  const search = async (city: string) => {
     if (city === "") {
       alert("Enter City Name");
       return;
     }
     try {
-      const url = `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`;
+      const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${city}&aqi=no`;
       const response = await fetch(url);
       const data = await response.json();
 
@@ -51,34 +52,55 @@ const Wheather = () => {
     search("bangkok");
   }, []);
 
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && inputRef.current) {
+      search(inputRef.current.value);
+    }
+  };
+
   return (
     <div className="wheather">
       <div className="search-bar">
-        <input ref={inputRef} type="text" placeholder="Search" />
+        <input
+          ref={inputRef}
+          type="text"
+          placeholder="Search"
+          onKeyPress={handleKeyPress}
+        />
         <img
           src={searchIcon}
-          alt=""
-          onClick={() => search(inputRef.current.value)}
+          alt="Search"
+          onClick={() => {
+            if (inputRef.current) {
+              search(inputRef.current.value);
+            }
+          }}
         />
       </div>
 
       {weatherData && (
         <>
-          <img src={weatherData?.icon} alt="" className="weather-icon" />
-          <p className="temperature">{weatherData?.temperature}</p>
-          <p className="location">{weatherData?.location}</p>
+          <img
+            src={weatherData.icon}
+            alt="Weather Icon"
+            className="weather-icon"
+          />
+          <p className="temperature">{weatherData.temperature}°C</p>
+          <p className="location">
+            {weatherData.location}, {weatherData.country}
+          </p>
           <div className="wheather-data">
             <div className="col">
-              <img src={humidityIcon} alt="" />
+              <img src={humidityIcon} alt="Humidity" />
               <div>
-                <p>{weatherData?.humidity} %</p>
+                <p>{weatherData.humidity} %</p>
                 <span>Humidity</span>
               </div>
             </div>
             <div className="col">
-              <img src={windIcon} alt="" />
+              <img src={windIcon} alt="Wind Speed" />
               <div>
-                <p>{weatherData?.windSpeed} km/h</p>
+                <p>{weatherData.windSpeed} km/h</p>
                 <span>Wind Speed</span>
               </div>
             </div>
