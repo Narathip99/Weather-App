@@ -1,4 +1,3 @@
-import React from "react";
 import Wheather from "./components/wheather/Wheather";
 
 const App = () => {

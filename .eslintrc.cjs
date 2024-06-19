@@ -15,7 +15,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     /* new rules */
-    "no-unused-vars": ["error", { varsIgnorePattern: "React" }],
     semi: ["error", "always"],
     quotes: ["error", "double"],
   },
