@@ -14,8 +14,8 @@ interface WeatherData {
 }
 
 const Wheather = () => {
-  const apiKey = process.env.WEATHER_API_KEY;
-
+  // const apiKey = import.meta.env.VITE_API_KEY;
+  const apiKey = process.env.API_KEY;
   const inputRef = useRef<HTMLInputElement>(null);
   const [weatherData, setWeatherData] = useState<WeatherData | null>(null);
 
